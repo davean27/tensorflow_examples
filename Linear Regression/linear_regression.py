@@ -1,19 +1,23 @@
 import tensorflow as tf
 
-# Training Set
+# Input train data set
 x = tf.placeholder(tf.float32, shape=[None])
 y = tf.placeholder(tf.float32, shape=[None])
 
+# Internal variables (weight, bias)
 W = tf.Variable(tf.random_normal([1]), name='weight')
 b = tf.Variable(tf.random_normal([1]), name='bias')
 
-h = x * W + b
+# Hypothesis
+hypothesis = x * W + b
 
-# reduce_mean : 평균 내주는 함수
-cost = tf.reduce_mean(tf.square(h - y))
+# reduce_mean : average value
+difference = hypothesis - y
+cost = tf.reduce_mean(tf.square(difference))
 
-opt = tf.train.GradientDescentOptimizer(learning_rate=0.1)
-train = opt.minimize(cost)
+
+optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.1)
+train = optimizer.minimize(cost)
 
 # Learning
 sess = tf.Session()
