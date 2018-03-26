@@ -13,5 +13,5 @@ run graph
 '''
 sess = tf.Session()
 
-print("sess.run(node1, node2): ", sess.run([const_node1, const_node2]))
-print("sess.run(node3): ", sess.run(com_node))
+print("sess.run(const_node1, const_node2): ", sess.run([const_node1, const_node2]))
+print("sess.run(com_node): ", sess.run(com_node))
