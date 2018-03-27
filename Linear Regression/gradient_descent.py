@@ -1,27 +1,37 @@
 import tensorflow as tf
 
+'''
+Training data
+'''
 x_data = [1, 2, 3]
 y_data = [1, 2, 3]
 
-w = tf.Variable(tf.random_normal([1]), name='weight')
-x = tf.placeholder(tf.float32)
-y = tf.placeholder(tf.float32)
+'''
+Linear Regression Modeling
+'''
+X = tf.placeholder(tf.float32)
+Y = tf.placeholder(tf.float32)
+W = tf.Variable(tf.random_normal([1]), name='weight')
+hypothesis = X * W
 
+# cost function
+cost = tf.reduce_mean(tf.square(hypothesis - Y))
 
-h = x * w
-
-cost = tf.reduce_sum(tf.square(h - y))
-
+# Gradient Descent Algorithm
 learning_rate = 0.1
-gradient = tf.reduce_mean((w * x - y) * x)
-descent = w - learning_rate * gradient
-update = w.assign(descent)
+gradient = tf.reduce_mean((W * X - Y) * X)
+descent = W - learning_rate * gradient
+new_W = W.assign(descent)
 
-# run
+'''
+Run
+'''
 sess = tf.Session()
 sess.run(tf.global_variables_initializer())
 
 for step in range(21):
-    sess.run(update, feed_dict={x: x_data, y : y_data})
-    print(step, sess.run(cost, feed_dict={x:x_data, y:y_data}), sess.run(w))
+    sess.run(new_W, feed_dict={X:x_data, Y:y_data})
+    print('step :', step, end=', ')
+    print('cost :', sess.run(cost, feed_dict={X:x_data, Y:y_data}), end=', ')
+    print('weight', sess.run(W))
 
